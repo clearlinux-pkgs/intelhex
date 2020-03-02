@@ -4,10 +4,10 @@
 #
 Name     : intelhex
 Version  : 2.2.1
-Release  : 7
+Release  : 8
 URL      : https://github.com/bialix/intelhex/archive/2.2.1.tar.gz
 Source0  : https://github.com/bialix/intelhex/archive/2.2.1.tar.gz
-Summary  : No detailed summary available
+Summary  : Python library for Intel HEX files manipulations
 Group    : Development/Tools
 License  : BSD-3-Clause
 Requires: intelhex-bin = %{version}-%{release}
@@ -19,11 +19,60 @@ BuildRequires : buildreq-distutils3
 %description
 Python IntelHex library
 ***********************
+
 Introduction
 ------------
-The Intel HEX file format is widely used in microprocessors and microcontrollers
-area (embedded systems etc) as the de facto standard
+The Intel HEX file format is widely used in microprocessors and microcontrollers 
+area (embedded systems etc) as the de facto standard 
 for representation of code to be programmed into microelectronic devices.
+
+This work implements an ``intelhex`` Python library to read, write, 
+create from scratch and manipulate data from Intel HEX file format.
+
+The distribution package also includes several convenience Python scripts,
+including "classic" ``hex2bin`` and ``bin2hex`` converters and more, 
+those based on the library itself. Check the docs to know more.
+
+License
+-------
+The code is distributed under BSD license,
+see `LICENSE.txt <https://github.com/bialix/intelhex/blob/master/LICENSE.txt>`_.
+
+In short: you can use IntelHex library in your project without *any*
+restrictions.
+
+Supported Python versions
+-------------------------
+IntelHex library v.2.2 supports Python 2 (2.4-2.7) and Python 3 (3.2-3.5 or later)
+without external libraries or 2to3 tool from the same codebase.
+
+Install
+-------
+Install using ``pip`` (recommended, no separate download required)::
+
+    pip install intelhex
+
+Download
+--------
+* https://pypi.org/project/IntelHex/
+* https://github.com/bialix/intelhex/releases
+
+Source code, bug reports, patches
+---------------------------------
+IntelHex on GitHub:
+
+https://github.com/bialix/intelhex
+
+User manual
+-----------
+User manual for IntelHex is available in the sources ``docs/manual/`` directory.
+You can browse User Manual online:
+
+https://readthedocs.org/projects/python-intelhex/
+
+Changelog
+---------
+See `NEWS.rst <https://github.com/bialix/intelhex/blob/master/NEWS.rst>`_
 
 %package bin
 Summary: bin components for the intelhex package.
@@ -55,6 +104,7 @@ python components for the intelhex package.
 Summary: python3 components for the intelhex package.
 Group: Default
 Requires: python3-core
+Provides: pypi(IntelHex)
 
 %description python3
 python3 components for the intelhex package.
@@ -62,19 +112,28 @@ python3 components for the intelhex package.
 
 %prep
 %setup -q -n intelhex-2.2.1
+cd %{_builddir}/intelhex-2.2.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1539723666
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1583158312
+# -Werror is for werrorists
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
+export MAKEFLAGS=%{?_smp_mflags}
 python3 setup.py build
 
 %install
+export MAKEFLAGS=%{?_smp_mflags}
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/intelhex
-cp LICENSE.txt %{buildroot}/usr/share/package-licenses/intelhex/LICENSE.txt
+cp %{_builddir}/intelhex-2.2.1/LICENSE.txt %{buildroot}/usr/share/package-licenses/intelhex/afe5cf57dace507920199f9f31f266dd66cd9765
 python3 -tt setup.py build  install --root=%{buildroot}
 echo ----[ mark ]----
 cat %{buildroot}/usr/lib/python3*/site-packages/*/requires.txt || :
@@ -94,7 +153,7 @@ echo ----[ mark ]----
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/intelhex/LICENSE.txt
+/usr/share/package-licenses/intelhex/afe5cf57dace507920199f9f31f266dd66cd9765
 
 %files python
 %defattr(-,root,root,-)
