@@ -4,7 +4,7 @@
 #
 Name     : intelhex
 Version  : 2.2.1
-Release  : 13
+Release  : 14
 URL      : https://github.com/bialix/intelhex/archive/2.2.1.tar.gz
 Source0  : https://github.com/bialix/intelhex/archive/2.2.1.tar.gz
 Summary  : Python library for Intel HEX files manipulations
