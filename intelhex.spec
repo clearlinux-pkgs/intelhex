@@ -4,7 +4,7 @@
 #
 Name     : intelhex
 Version  : 2.3.0
-Release  : 16
+Release  : 17
 URL      : https://github.com/bialix/intelhex/archive/2.3.0/intelhex-2.3.0.tar.gz
 Source0  : https://github.com/bialix/intelhex/archive/2.3.0/intelhex-2.3.0.tar.gz
 Summary  : Python library for Intel HEX files manipulations
@@ -75,7 +75,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1608064650
+export SOURCE_DATE_EPOCH=1635467078
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
